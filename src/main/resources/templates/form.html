@@ -1,58 +1,69 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout :: head">
-<script src="/js/select.js"></script>
+ <meta charset="utf-8"></meta>
 </head>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"></link>
+ <link rel="stylesheet" href="/resources/demos/style.css"></link>
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <body>
-    <nav th:replace="layout :: header"></nav>
+   <nav th:replace="layout :: header"></nav>
 
-    <div class="container main-content form">
-        <div class="row">
-          <form action="#" th:action="@{/data/save}" th:object="${data}"
-		    method="POST" novalidate="novalidate">
-		    <input type="hidden" th:field="*{id}" />
-		    <input type="hidden" id="username" name="username" th:value="${username}"/>
-		    <input type="hidden" id="password" name="password" th:value="${password}"/>
-		    <div class="form-group">
-		        <label>担当局名</label> 
-		        <input type="text" class="form-control" id="area" name="area" th:value="${area}" />
-		    </div>
-		    <div class="form-group">
-		        <label>受付番号</label> 
-		        <input type="text" class="form-control" th:field="*{recepti}" />
-		    </div>
-		    <div class="form-group">
-		        <label>受付年月日</label> 
-		        <input type="text" class="form-control"
-		            th:field="*{date}" /> 
-		    </div>
-		    <div class="form-group">
-		        <label>原因</label> 
-		        <input type="text" class="form-control" th:field="*{cause}" />
-		    </div>
-		    <div class="form-group">
-		        <label>不動産番号</label> 
-		        <input type="text" class="form-control"
-		            th:field="*{estate}" /> 
-		    </div>
-		    <div class="form-group">
-		        <label>地番</label> 
-		        <input type="text" class="form-control" th:field="*{lotnumber}" />
-		    </div>
-		    <div class="form-group">
-		        <label>家屋番号</label> 
-		        <input type="text" class="form-control"
-		            th:field="*{house}" /> 
-		    </div>
-		    <div class="form-group">
-		        <label>保管フォルダ名(半角)</label> 
-		        <input type="text" class="form-control" th:field="*{folderpath}" />
-		    </div>
-		    <button type="submit" class="btn btn-primary">Save</button>
-		</form>
-        </div>
-    </div><!-- /.container -->
+   <div class="container main-content form">
+       <div class="row">
+         <form action="#" th:action="@{/finderInfo/save}" th:object="${finderInfo}"
+            method="POST" novalidate="novalidate">
+            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" id="username" name="username" th:value="${username}"/>
+            <input type="hidden" id="password" name="password" th:value="${password}"/>
+            
+            <div class="form-group">
+                <label>担当局名</label> 
+                <input type="text" class="form-control" id="area" name="area" th:value="${area}" />                
+            </div>
+            <div class="form-group">
+                <label>受付番号</label> 
+                <input type="text" class="form-control" th:field="*{recepti}" />
+            </div>
+            
+            <div class="form-group">
+                 <label>受付年月日</label><br/>
+                <input type="text" id="datepicker" class="form-control" th:field="*{date}"  />                                
+            </div>
+            
+            <div class="form-group">
+                <label>原因</label>
+                <input type="text" class="form-control" th:field="*{cause}" />
+            </div>
+            <div class="form-group">
+                <label>不動産番号</label> 
+                <input type="text" class="form-control" th:field="*{estate}" /> 
+            </div>
+            <div class="form-group">
+                <label>地番</label>
+                <input type="text" class="form-control" th:field="*{lotnumber}" />
+            </div>
+            <div class="form-group">
+                <label>家屋番号</label> 
+                <input type="text" class="form-control" th:field="*{house}" /> 
+            </div>
+            <div class="form-group">
+                <label>保管フォルダ名(半角)</label>
+                <input type="text" class="form-control" th:field="*{folderpath}" />
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+       </div>        
+   </div><!-- /.container -->
+   
+    <script>
+         $( function() {              
+               $( '#datepicker' ).datepicker({dateFormat: "yy/mm/dd"});                
+             } );
+     </script>
 
-    <footer th:replace="layout :: footer"></footer>
-</body>
+   <footer th:replace="layout :: footer"></footer>
+ </body>
 </html>

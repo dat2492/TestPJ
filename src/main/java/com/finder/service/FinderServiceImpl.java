@@ -20,9 +20,18 @@ public class FinderServiceImpl implements FinderService {
 
     @Override
     public List<FinderInfo> search(int q) {
-        return finderRepository.findByIdIs(q);
+        return finderRepository.findById(q);
+    }
+    
+    @Override
+    public List<FinderInfo> kwSearch(String area, String recepti, String date) {
+        return finderRepository.findByAreaAndReceptiAndDate(area, recepti, date);
     }
 
+    public FinderInfo searchf(String username, String folderpath) {
+    	return finderRepository.findByUsernameAndFolderpath(username, folderpath);
+    }
+    
     @Override
     public FinderInfo findOne(int id) {
         return finderRepository.findOne(id);

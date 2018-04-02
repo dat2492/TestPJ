@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout :: head"></head>
+<head th:replace="layout :: head">
+ <meta charset="utf-8"></meta>
+</head>
 <body>
 	<nav th:replace="layout :: header"></nav>
 
@@ -14,11 +16,11 @@
 			<span th:text="${success}"></span>
 		</div>
 		<div class="row">
-			<a th:href="@{/data/create}" class="btn btn-success pull-left">
+			<a th:href="@{/finderInfo/create}" class="btn btn-success pull-left">
 				<span class="glyphicon glyphicon-plus"></span> Add new information
 			</a>
 			<form class="form-inline pull-right" action="#"
-				th:action="@{/data/search}" method="GET">
+				th:action="@{/finderInfo/search}" method="GET">
 				<div class="form-group">
 					<input type="text" class="form-control" name="s"
 						placeholder="Type id..." />
@@ -26,11 +28,11 @@
 				<button type="submit" class="btn btn-primary">Search</button>
 			</form>
 		</div>
-		<th:block th:if="${#lists.isEmpty(datas)}">
+		<th:block th:if="${#lists.isEmpty(finderInfos)}">
 			<h3>No data</h3>
 		</th:block>
 
-		<th:block th:unless="${#lists.isEmpty(datas)}">
+		<th:block th:unless="${#lists.isEmpty(finderInfos)}">
 			<div class="row">
 				<table class="table table-bordered table-hover">
 					<thead>
@@ -48,10 +50,10 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="contact,iterStat : ${datas}">
-						   <td><a th:href="login" th:text="${iterStat.count}"></a></td>
-							<td th:text="${contact.area}"></td>
+						<tr th:each="contact,iterStat : ${finderInfos}" th:if="${contact.username != test}">
+						   <td><a th:href="@{/finderInfo/{folder}/check(folder=${contact.folderpath})}" th:text="${iterStat.count}"></a></td>
 							<td th:text="${contact.username}"></td>
+							<td th:text="${contact.area}"></td>
 							<td th:text="${contact.recepti}"></td>
 							<td th:text="${contact.date}"></td>
 							<td th:text="${contact.cause}"></td>

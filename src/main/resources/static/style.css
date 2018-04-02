@@ -1,0 +1,13 @@
+/* Styles go here */
+body {
+    padding-top:70px;
+    background: white;
+}
+footer {
+    border-top: 1px solid dodgerblue;
+    background: lightblue;
+    padding:28px 0;
+}
+.table td {
+  font-size: 12px;
+}

@@ -8,6 +8,10 @@ import com.finder.model.*;
 
 public interface FinderRepository extends CrudRepository<FinderInfo, Integer> {
 
-    List<FinderInfo> findByIdIs(int q);
+    List<FinderInfo> findById(int q);
+    
+    List<FinderInfo> findByAreaAndReceptiAndDate(String area, String recepti, String date);
+    
+    FinderInfo findByUsernameAndFolderpath(String username, String folderpath );
 
 }

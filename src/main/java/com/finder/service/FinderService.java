@@ -7,7 +7,11 @@ public interface FinderService {
 	Iterable<FinderInfo> findAll();
 
     List<FinderInfo> search(int q);
-
+    
+    List<FinderInfo> kwSearch(String area, String recepti,String date);
+    
+    FinderInfo searchf(String username, String folderpath);
+    
     FinderInfo findOne(int id);
 
     void save(FinderInfo contact);

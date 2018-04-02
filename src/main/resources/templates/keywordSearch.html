@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head">
+ <meta charset="utf-8"></meta>
+  <title>Webslesson Tutorial | JSON - Dynamic Dependent Dropdown List using Jquery and Ajax</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <script src="/js/select.js"></script>
+ </head>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"></link>
+ <link rel="stylesheet" href="/resources/demos/style.css"></link>
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ <script>
+         $( function() {              
+               $( '#datepicker' ).datepicker({dateFormat: "yy/mm/dd"});                
+             } );
+     </script>
+ <body>
+ <nav th:replace="layout :: header"></nav>
+ <div class="container main-content form">
+   <h2 align="center">Please select</h2><br /><br />
+   <form action="#" th:action="@{/finderInfo/kwResult}" method="GET"  th:object="${finderInfo}">
+   <div class="form-group">
+   <select name="country" id="country" class="form-control input-lg">
+    <option value="">Select country</option>
+   </select>
+   <br />
+   </div>
+   <div class="form-group">
+   <select name="state" id="state" class="form-control input-lg">
+    <option value="">Select state</option>
+   </select>
+   </div>
+   <br />
+   <div class="form-group">
+   <select name="city" id="city"  class="form-control input-lg">
+    <option value="" >Select city</option>
+   </select>
+   </div>
+   <div class="form-group">
+    <label>受付番号</label> 
+   <input type="text" class="form-control" th:field="*{recepti}" />
+    </div>
+     <div class="form-group">
+    <label>受付年月日</label><br/>
+     <input type="text" id="datepicker" class="form-control" th:field="*{date}"  />                                
+     </div>
+     <input type="hidden" id="myhidden" name="myhidden" th:field="*{area}"/>
+   <button type="submit" class="btn btn-primary">Search</button>
+   </form>
+  </div>
+  <footer th:replace="layout :: footer"></footer>
+ </body>
+</html>
+ <script>
+ $("#city").change(function() {
+	 var x = $(this).find("option:selected").text();
+	 $('#myhidden').val(x);
+	});
+ </script>

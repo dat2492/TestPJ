@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ <head>
+<meta charset="UTF-8"/>
+<title>Upload Multi File</title>
+<link data-require="bootstrap-css@3.2.0" data-semver="3.2.0" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+     
+     <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.common.min.css"/>
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.rtl.min.css"/>
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.default.min.css"/>
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.2.714/styles/kendo.mobile.all.min.css"/>
+
+    <script src="http://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2016.2.714/js/angular.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2016.2.714/js/jszip.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2016.2.714/js/kendo.all.min.js"></script>
+
+    <script src="//kendo.cdn.telerik.com/2016.2.714/js/pako_deflate.min.js"></script>
+<script>
+      function export_pdf(){
+        kendo.drawing.drawDOM($("#formConfirmation"), {
+          paperSize : "A4",
+          margin : {
+            top : "2cm",
+            left : "1cm",
+            right : "1cm",
+            bottom : "1cm"
+          }
+        }).then(function(group) {
+          kendo.drawing.pdf.saveAs(group, "export.pdf");
+        }); 
+      }
+    </script>
+    <script>
+    kendo.pdf.defineFont({
+        "DejaVu Sans"             : "/font/arialunicodems.ttf",
+      });
+    </script>
+     <style>
+      button{
+        margin: 5px;
+      }
+      .pdf-page {
+        font-size: 70%;
+        height: 21.9cm;
+        font-family: "DejaVu Sans", "Arial Unicode MS", sans-serif;
+      }
+
+    </style>
+</head>
+<link rel="stylesheet" href="/css/certification.css"/>
+<body>
+
+<div class="centered">
+<div id="formConfirmation">
+<h1>文書保管証明書</h1>
+<div style="float: right">
+<img src="/images/file.png" style="width:150px;height:150px"/>
+</div>
+<br />
+<p>表記の文書ファイルは確かに文書保管システムに保管され、文書保管開始日より証明書発行日の間、安全に保管され 改変されていないことを証明します。</p>   
+<p style="float: left">文書保管開始日: </p><p th:text="${creationTime}"></p>           
+<p style="float: left">証明書発行日: </p><p th:text="${creationTime}"></p>          
+<p style="float: left">所有者ID: </p><p th:text="${username}"></p>
+<p style="float: left">保管文書名: </p><p th:text="${path}"></p>        
+<div class="container main-content list">
+<h2>保管ファイル一覧</h2>
+<div th:each="file : ${files}">
+<div style="float: left">
+<img src="/images/noqualified.png" style="width:40px;height:40px" />
+</div> 
+ <p th:text="${file}"></p><p th:text="${creationTime1}"></p>
+</div>
+<br />
+<div th:each="file2 : ${files2}"> 
+<div style="float: left">
+<img src="/images/qualified.png" style="width:40px;height:40px" />
+</div>
+  <p th:text="${file2}"></p><p th:text="${creationTime2}"></p>
+</div>
+</div>
+<div style="float: right">
+<img src="/images/syomei.png" alt="Mountain View" style="width:100px;height:80px"/>
+</div>
+</div>
+</div>
+<button onclick="export_pdf()"> Export PDF </button>
+<a href="javascript:genPDF()">Download PDF</a>
+</body>
+</html>

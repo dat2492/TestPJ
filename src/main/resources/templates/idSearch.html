@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head">
+ <meta charset="utf-8"></meta>
+  <title>フォルダ情報の取得</title>
+ </head>
+ <body>
+ <nav th:replace="layout :: header"></nav>
+ <div class="container main-content form">
+   <div class="row">
+			<form class="form-inline pull-right" action="#"
+				th:action="@{/finderInfo/search}" method="GET">
+				<div class="form-group">
+					<input type="text" class="form-control" name="s"
+						placeholder="Type id..." />
+				</div>
+				<button type="submit" class="btn btn-primary">Search</button>
+			</form>
+		</div>
+  </div>
+  <footer th:replace="layout :: footer"></footer>
+ </body>
+</html>

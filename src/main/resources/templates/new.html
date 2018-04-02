@@ -11,7 +11,8 @@
  <nav th:replace="layout :: header"></nav>
  <div class="container main-content form">
    <h2 align="center">Please select</h2><br /><br />
-   <form method="post" th:action="@{/data/create}" th:object="${finderInfo}">
+   <form action="#" th:action="@{/finderInfo/create}" th:object="${finderInfo}"
+		    method="GET">
    <div class="form-group">
    <select name="country" id="country" class="form-control input-lg">
     <option value="">Select country</option>
@@ -25,14 +26,20 @@
    </div>
    <br />
    <div class="form-group">
-   <select name="city" id="city" th:field="*{area}" class="form-control input-lg">
-    <option value="">Select city</option>
+   <select name="city" id="city"  class="form-control input-lg">
+    <option value="" >Select city</option>
    </select>
    </div>
+   <input type="hidden" id="myhidden" name="myhidden" th:field="*{area}"/>
    <button type="submit" class="btn btn-primary">Next</button>
    </form>
   </div>
   <footer th:replace="layout :: footer"></footer>
  </body>
 </html>
-
+ <script>
+ $("#city").change(function() {
+	 var x = $(this).find("option:selected").text();
+	 $('#myhidden').val(x);
+	});
+ </script>
