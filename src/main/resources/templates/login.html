@@ -5,20 +5,61 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Login</title>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </head>
-    <body>
+ <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="" />
+  <meta name="author" content="Amir Boroumand" />
+  <link rel="icon" href="favicon.ico" />
+
+  <title>User Registration with Spring Boot</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"  />
+
+	<link th:href="@{css/style.css}" rel="stylesheet" />
+	<link th:href="@{css/fv.css}" rel="stylesheet" />	
+</head>
+    <body class="gray-bg">
+    <div style="text-align:center;">
+    <img src="/images/file.png" style="width:250px;height:250px"/></div>
+    <div class="container main-content form">
         <form method="post" th:action="@{/access}" th:object="${finderInfo}">
-            <label for="username">Username</label>
-            <input type="text" placeholder="User" th:field="*{username}" />
-            <br />
-            <label for="password">Password</label>
-            <input type="password" placeholder="Password" th:field="*{password}" />
-            <br />
-            <input type="submit" value="Go" />
+        <div th:if="${#fields.hasErrors('username')}"
+          th:errors="*{username}"
+          class="validation-message alert alert-danger" role="alert"></div>
+
+        <div th:if="${#fields.hasErrors('password')}"
+          th:errors="*{password}"
+          class="validation-message alert alert-danger" role="alert"></div>
+            
+           <div class="form-group input-group has-feedback">
+          <label th:if="${#fields.hasErrors('username')}"
+            th:errors="*{username}" class="validation-message"></label>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+          
+          <input type="text" th:field="*{username}"
+            placeholder="Username" class="form-control" th:required="required" />
+          <span class="glyphicon form-control-feedback"
+            aria-hidden="true"></span>
+        </div>
+            <div class="form-group input-group has-feedback">
+          <label th:if="${#fields.hasErrors('password')}"
+            th:errors="*{password}" class="validation-message"></label>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-lock"></span>
+          </span>
+          
+          <input type="password" th:field="*{password}"
+            placeholder="Password" class="form-control" th:required="required" />
+          <span class="glyphicon form-control-feedback"
+            aria-hidden="true"></span>
+        </div>
+            <input type="submit"  class="btn btn-primary block full-width m-b" value="Go" />
         </form>
+        </div>
     </body>
 </html>
