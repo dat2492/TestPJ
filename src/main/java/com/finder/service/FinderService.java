@@ -24,6 +24,4 @@ public interface FinderService {
     FinderInfo findOne(int id);
 
     void save(FinderInfo contact);
-
-    void delete(int id);
 }
