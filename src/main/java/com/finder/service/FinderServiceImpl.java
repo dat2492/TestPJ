@@ -46,8 +46,4 @@ public class FinderServiceImpl implements FinderService {
     	finderRepository.save(contact);
     }
 
-    @Override
-    public void delete(int id) {
-    	finderRepository.delete(id);
-    }
 }
