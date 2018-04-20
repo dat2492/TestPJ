@@ -53,7 +53,7 @@
 							
 
 						<tr th:each="contact,iterStat : ${finderInfos}" th:if="${contact.username != test}">
-						   <td><a th:href="@{/finderInfo/{folder}/check(folder=${contact.folderpath})}" th:text="${iterStat.count}"></a></td>							
+						   <td><a th:href="@{/finderInfo/{folder}/check(folder=${contact.folderpath})}" th:text="${contact.id}"></a></td>						   	
 							<td th:text="${contact.username}"></td>
 							<td th:text="${contact.area}"></td>
 							<td th:text="${contact.recepti}"></td>
