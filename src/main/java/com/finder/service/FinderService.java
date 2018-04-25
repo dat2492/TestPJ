@@ -8,6 +8,8 @@ public interface FinderService {
 
     List<FinderInfo> search(int q);
     
+    List<FinderInfo> UserFilter(String username);
+    
     List<FinderInfo> kwSearch(String area, String recepti,String date);
     
     FinderInfo searchf(String username, String folderpath);

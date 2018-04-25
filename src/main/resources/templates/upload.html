@@ -13,6 +13,14 @@
 				<span class="glyphicon glyphicon-plus"></span> ドラッグ＆ドロップのアップロードはコチラ
 		</a>
 		</div>
+		<div th:if="${message}"
+			class="validation-message alert alert-danger" role="alert">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<span th:text="${message}"></span>
+		</div>
       <form th:object="${myUploadForm}" method="POST"
          action="" enctype="multipart/form-data">               
          <br/><br/>

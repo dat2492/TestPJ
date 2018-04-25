@@ -11,17 +11,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class DirectoryController {
 	
 	
-	@GetMapping("/finderInfo/{folder}/check")
-    public String dashboardPage(Model model,@PathVariable String folder,HttpServletRequest hsr,HttpServletRequest request) {
+	@GetMapping("/finderInfo/{id}/{folder}/check")
+    public String dashboardPage(Model model,@PathVariable("folder") String folder,@PathVariable("id") String id,HttpServletRequest hsr,HttpServletRequest request) {
 		HttpSession session = hsr.getSession();
     	String user = session.getAttribute("user").toString();
-    	String path = "/home/"+user+"/samba/"+folder+"/";
+    	String path = "/home/"+user+"/samba/nsr/"+folder+"/";
+    	session.setAttribute("folderID", id);
+    	session.setAttribute("folder", folder);
     	request.getSession().setAttribute("path", path);
+    	System.out.println(path);
 		File dir = new File(path);
 		File[] files = dir.listFiles(new FilenameFilter() {
 		    public boolean accept(File dir, String name) {

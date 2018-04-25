@@ -31,6 +31,10 @@ public class FinderServiceImpl implements FinderService {
     public FinderInfo searchf(String username, String folderpath) {
     	return finderRepository.findByUsernameAndFolderpath(username, folderpath);
     }
+    @Override
+    public List<FinderInfo> UserFilter(String username) {
+        return finderRepository.findByUsername(username);
+    }
     
     @Override
     public FinderInfo findOne(int id) {

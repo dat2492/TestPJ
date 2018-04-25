@@ -4,22 +4,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.finder.model.MyUploadForm;
+
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -56,24 +54,23 @@ public class UploadController {
        HttpSession session = hsr.getSession();
     	String user = session.getAttribute("user").toString();
     	String folderpath = session.getAttribute("folderpath").toString();
-        String uploadRootPath = "/home/"+user+"/samba/"+folderpath+"/";
- 
+        String uploadRootPath = "/home/"+user+"/samba/nsr/"+folderpath+"/";
         File uploadRootDir = new File(uploadRootPath);
         // Tạo thư mục gốc upload nếu nó không tồn tại.
         if (!uploadRootDir.exists()) {
             uploadRootDir.mkdirs();
         }
         MultipartFile[] fileDatas = myUploadForm.getFileDatas();
+        if(fileDatas != null) {
+        	model.addAttribute("message", "Please select a file to upload");
+        	return "index";
+        }
         // 
         List<File> uploadedFiles = new ArrayList<File>();
         List<String> failedFiles = new ArrayList<String>();
  
         for (MultipartFile fileData : fileDatas) {
- 
-            // Tên file gốc tại Client.
             String name = fileData.getOriginalFilename();
-            System.out.println("Client File Name = " + name);
- 
             if (name != null && name.length() > 0) {
                 try {
                     // Tạo file tại Server.
@@ -89,13 +86,20 @@ public class UploadController {
                     System.out.println("Write file: " + serverFile);
                 } catch (Exception e) {
                     System.out.println("Error Write file: " + name);
-                    failedFiles.add(name);
                 }
             }
         }
+        model.addAttribute("area", session.getAttribute("area"));
+        model.addAttribute("recepti", session.getAttribute("recepti"));
+        model.addAttribute("date", session.getAttribute("date"));
+        model.addAttribute("cause", session.getAttribute("cause"));
+        model.addAttribute("estate", session.getAttribute("estate"));
+        model.addAttribute("lotnumber", session.getAttribute("lotnumber"));
+        model.addAttribute("house", session.getAttribute("house"));
+        model.addAttribute("folderpath", session.getAttribute("folderpath"));
         model.addAttribute("uploadedFiles", uploadedFiles);
         model.addAttribute("failedFiles", failedFiles);
-        return "uploadResult";
+        return "ConfirmationPage";
     }
     
     @RequestMapping("/dropzone")
@@ -107,19 +111,11 @@ public class UploadController {
 	        method = { RequestMethod.POST })
 	public @ResponseBody Object upload(
 	        @RequestParam("file") MultipartFile file,
-	        HttpServletRequest request,HttpServletRequest hsr) {
+	        HttpServletRequest request,HttpServletRequest hsr,Model model) {
     	HttpSession session = hsr.getSession();
     	String user = session.getAttribute("user").toString();
     	String folderpath = session.getAttribute("folderpath").toString();
-       String UPLOADED_FOLDER = "/home/"+user+"/samba/"+folderpath+"/";
-		System.out.println("upload() called");
-
-		if (file.isEmpty()) {
-			request.setAttribute("message",
-			        "Please select a file to upload");
-			return "uploadStatus";
-		}
-
+       String UPLOADED_FOLDER = "/home/"+user+"/samba/nsr/"+folderpath+"/";
 		try {
 			String directory = UPLOADED_FOLDER;
             File dir = new File(directory);
@@ -130,16 +126,38 @@ public class UploadController {
 			Files.write(path, bytes);
 			ProcessBuilder pb = new ProcessBuilder("gpg", "--passphrase", "1234567890", "--batch", "--quiet", "--yes", "-ba", path.toString());
       	  Process p = pb.start();
-			request.setAttribute("message",
-			        "You have successfully uploaded '"
-			                + file.getOriginalFilename() + "'");
+			File[] files = dir.listFiles(new FilenameFilter() {
+			    public boolean accept(File dir, String name) {
+			        return !name.toLowerCase().endsWith(".asc");
+			    }
+			});
 
+	        ArrayList filPaths = new ArrayList();
+	        for (File file2 : files) {
+	            filPaths.add(file2.getName());
+	        }
+			request.getSession().setAttribute("files", filPaths);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "hello";
+		return "";
 
 	}
-
-
+    
+    @GetMapping("/ddCPage")
+	public String options(HttpServletRequest hsr,Model model) {
+    	 HttpSession session = hsr.getSession();
+    	 model.addAttribute("area", session.getAttribute("area"));
+        model.addAttribute("recepti", session.getAttribute("recepti"));
+        model.addAttribute("date", session.getAttribute("date"));
+        model.addAttribute("cause", session.getAttribute("cause"));
+        model.addAttribute("estate", session.getAttribute("estate"));
+        model.addAttribute("lotnumber", session.getAttribute("lotnumber"));
+        model.addAttribute("house", session.getAttribute("house"));
+        model.addAttribute("folderpath", session.getAttribute("folderpath"));
+        //ArrayList list = (ArrayList) session.getAttribute("files");
+        model.addAttribute("uploadedFiles", session.getAttribute("files"));
+        //System.out.println(session.getAttribute("files"));
+        return "ConfirmationPage";
+	}
 }

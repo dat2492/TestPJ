@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head">
+ <meta charset="utf-8"></meta>
+  <title>Confirm</title>
+ </head>
+ <body>
+ <nav th:replace="layout :: header"></nav>
+<div class="container main-content list">
+<div class="row">
+<h1>案件情報およびアップロードファイルの確認</h1>
+<table class="table table-bordered table-hover">
+<thead>
+<tr>
+<th>担当局名</th>
+<th>受付番号</th>
+<th>受付年月日</th>
+<th>原因</th>
+<th>不動産番号</th>
+<th>地番</th>
+<th>家屋番号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th th:text="${area}"></th>
+<th th:text="${recepti}"></th>
+<th th:text="${date}"></th>
+<th th:text="${cause}"></th>
+<th th:text="${estate}"></th>
+<th th:text="${lotnumber}"></th>
+<th th:text="${house}"></th>
+</tr>
+</tbody>
+</table>
+<p>アップロードファイルされたファイルは以下の通りです。</p>
+<div th:each="file : ${uploadedFiles}">
+<p th:text="${file}"></p>  
+</div>
+  </div>
+  </div>
+  <footer th:replace="layout :: footer"></footer>
+ </body>
+</html>

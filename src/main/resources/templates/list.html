@@ -15,19 +15,6 @@
 			</button>
 			<span th:text="${success}"></span>
 		</div>
-		<div class="row">
-			<a th:href="@{/finderInfo/create}" class="btn btn-success pull-left">
-				<span class="glyphicon glyphicon-plus"></span> Add new information
-			</a>
-			<form class="form-inline pull-right" action="#"
-				th:action="@{/finderInfo/search}" method="GET">
-				<div class="form-group">
-					<input type="text" class="form-control" name="s"
-						placeholder="Type id..." />
-				</div>
-				<button type="submit" class="btn btn-primary">Search</button>
-			</form>
-		</div>
 		<th:block th:if="${#lists.isEmpty(finderInfos)}">
 			<h3>No data</h3>
 		</th:block>
@@ -50,8 +37,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="contact,iterStat : ${finderInfos}" th:if="${contact.username != test}">
-						   <td><a th:href="@{/finderInfo/{folder}/check(folder=${contact.folderpath})}" th:text="${iterStat.count}"></a></td>
+						<tr th:each="contact,iterStat : ${finderInfos}">
+						   <td><a th:href="@{/finderInfo/{id}/{folder}/check(folder=${contact.folderpath},id=${iterStat.count})}" th:text="${iterStat.count}"></a></td>
 							<td th:text="${contact.username}"></td>
 							<td th:text="${contact.area}"></td>
 							<td th:text="${contact.recepti}"></td>

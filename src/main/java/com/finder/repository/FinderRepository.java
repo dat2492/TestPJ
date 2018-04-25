@@ -13,5 +13,8 @@ public interface FinderRepository extends CrudRepository<FinderInfo, Integer> {
     List<FinderInfo> findByAreaAndReceptiAndDate(String area, String recepti, String date);
     
     FinderInfo findByUsernameAndFolderpath(String username, String folderpath );
+    
+    List<FinderInfo> findByUsername(String username);
+    
 
 }

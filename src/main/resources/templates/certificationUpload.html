@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head">
+<meta charset="UTF-8" />
+<title>Upload Multi File</title>
+</head>
+
+<body>
+	<nav th:replace="layout :: header"></nav>
+	<div class="container main-content form">
+	<div th:if="${message}"
+			class="validation-message alert alert-danger" role="alert">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<span th:text="${message}"></span>
+		</div>
+			<div th:if="${message1}"
+			class="row alert alert-success alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<span th:text="${message1}"></span>
+		</div>
+		<div th:if="${message2}"
+			class="validation-message alert alert-danger" role="alert">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<span th:text="${message2}"></span>
+		</div>
+		<form method="POST" action="/upload" enctype="multipart/form-data">
+			<div class="form-group">
+				<label>下記フォームからpdfファイルをアップロードしください。</label> <input type="file"
+					name="file" accept=".pdf" />
+			</div>
+			<button type="submit" class="btn btn-primary">Upload</button>
+		</form>
+	</div>
+	<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

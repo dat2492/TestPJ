@@ -12,8 +12,18 @@
 	src="/js/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script
 	src="/js/dropzone-4.3.0/dist/dropzone.js"></script>
-
-
+<!--
+<script>
+Dropzone.options.fileUploadForm = {
+		  init: function () {
+		    this.on("complete", function (file) {
+		    	
+		    	location.href = '/ddCPage?value='+file.name;
+		    });
+		  }
+		};
+</script>
+-->
 <link rel="stylesheet"
 	href="/js/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
 <link rel="stylesheet"
@@ -33,7 +43,6 @@
 						<form enctype="multipart/form-data"
 							action="/upload2" method="POST"
 							class="dropzone" id="fileUploadForm">
-
 							<span id="fileUploadStatus"> </span>
 
 						</form>
@@ -41,6 +50,9 @@
 				</div>
 			</div>
 		</div>
+		<a th:href="@{/ddCPage}" class="btn btn-success pull-left">
+				<span class="btn btn-primary"></span> Next
+	</a>
 	</div>
 	<footer th:replace="layout :: footer"></footer>
 </body>

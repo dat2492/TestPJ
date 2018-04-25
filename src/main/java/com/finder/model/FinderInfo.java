@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "finder")
@@ -55,7 +56,7 @@ public class FinderInfo implements Serializable {
 	
 	@Column(name = "password")
 	private String password;
-
+	
 	public FinderInfo() {
 		super();
 	}
