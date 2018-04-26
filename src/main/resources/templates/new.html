@@ -1,45 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout :: head">
-  <title>Webslesson Tutorial | JSON - Dynamic Dependent Dropdown List using Jquery and Ajax</title>
+  <meta charset="UTF-8"></meta>  
+  <title>法務局</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
- <script src="/js/select.js"></script>
+ <script src="/js/select.js"></script> 
  </head>
+ 
  <body>
  <nav th:replace="layout :: header"></nav>
- <div class="container main-content form">
-   <h2 align="center">Please select</h2><br /><br />
-   <form action="#" th:action="@{/finderInfo/create}" th:object="${finderInfo}"
-		    method="GET">
-   <div class="form-group">
+ <div class="container main-content left">
+   <h2 align="center">手動入力による案件登録</h2><br/><br/>
+   <h3 align="left">登録する法務局を選択してください</h3><br/><br/>
+   <form action="#" th:action="@{/finderInfo/create}" th:object="${finderInfo}" method="GET">
+
+   <div class="form-group" style="width:300px;">
    <select name="country" id="country" class="form-control input-lg">
-    <option value="">Select country</option>
+    <option>管轄エリアを選択</option>
    </select>
-   <br />
+   <br />   
    </div>
-   <div class="form-group">
+   
+   <div class="form-group" style="width:300px;">
    <select name="state" id="state" class="form-control input-lg">
-    <option value="">Select state</option>
+    <option value="">管轄エリアを選択</option>
    </select>
    </div>
-   <br />
-   <div class="form-group">
+   <br />   
+
+	<div class="form-group" style="width:300px;">
    <select name="city" id="city"  class="form-control input-lg">
-    <option value="" >Select city</option>
+    <option value="" >登録法務局を選択</option>
    </select>
    </div>
    <input type="hidden" id="myhidden" name="myhidden" th:field="*{area}"/>
-   <button type="submit" class="btn btn-primary">Next</button>
-   </form>
-  </div>
+
+	<br/>
+   <button type="submit" class="btn btn-primary">Next</button>  
+ </form>  
+ </div> 
   <footer th:replace="layout :: footer"></footer>
  </body>
-</html>
+</html> 
+
+
  <script>
- $("#city").change(function() {
-	 var x = $(this).find("option:selected").text();
-	 $('#myhidden').val(x);
-	});
- </script>
+$("#city").change(function() {
+     var x = $(this).find("option:selected").text();
+     $('#myhidden').val(x);
+    });
+</script>

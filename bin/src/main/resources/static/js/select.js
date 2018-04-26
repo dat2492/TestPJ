@@ -13,14 +13,14 @@ $(document).ready(function(){
     {
      if(value.parent_id == 0)
      {
-      html_code += '<option value="'+value.id+'">'+value.name+'</option>';
+      html_code += '<option value="'+value.name+'">'+value.name+'</option>';
      }
     }
     else
     {
      if(value.parent_id == parent_id)
      {
-      html_code += '<option value="'+value.id+'">'+value.name+'</option>';
+      html_code += '<option value="'+value.name+'">'+value.name+'</option>';
      }
     }
    });
@@ -45,12 +45,11 @@ $(document).ready(function(){
   var state_id = $(this).val();
   if(state_id != '')
   {
-   load_json_data('city', state_id);   
+   load_json_data('city', state_id);
   }
   else
   {
-   $('#city').html('<option value="">登録法務局を選択</option>');   
+   $('#city').html('<option value="">登録法務局を選択</option>');
   }
- });  
-
+ });
 });

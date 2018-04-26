@@ -1,9 +1,16 @@
 package com.finder.service;
 
 import java.util.List;
-import com.finder.model.FinderInfo;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.finder.model.FinderInfo;
+import com.finder.repository.FinderRepository;
+
+@Service("finderService")
 public interface FinderService {
+	
 	Iterable<FinderInfo> findAll();
 
     List<FinderInfo> search(int q);

@@ -6,9 +6,6 @@ import java.io.InputStreamReader;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.DefaultExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,17 +57,6 @@ public class LoginController {
         	User userExists = userService.checkUser(part1);
         	if(userExists== null) {
         		userService.save(user);
-        		String line = "mkdir -m  550 /home/"+part1+"/samba/ & chown "+part1+":"+part1+" /home/"+part1+"/samba/ & "
-        			+	"mkdir -m  775 /home/"+part1+"/samba/nsr/ & chown "+part1+":"+part1+" /home/"+part1+"/samba/nsr/ & "
-        				+ "mkdir -m  775 /home/"+part1+"/samba/free/ & chown "+part1+":"+part1+" /home/"+part1+"/samba/free/ & "
-        						+ "mkdir -m  777 /home/"+part1+"/samba/.verify/ & chown "+part1+":"+part1+" /home/"+part1+"/samba/.verify/ & "
-        								+ "mkdir -m  700 /home/tmp/"+part1+"/ & chown "+part1+":"+part1+" /home/tmp/"+part1+"/ & "
-        										+ "mkdir -m  700 /home/tmp/csv/"+part1+"/ & chown "+part1+":"+part1+" /home/tmp/csv/"+part1+"/";
-        		CommandLine commandLine = CommandLine.parse(line);
-        		DefaultExecutor executor = new DefaultExecutor();
-        		executor.setExitValue(1);
-        		int exitValue = executor.execute(commandLine);
-
         	}
         	return "redirect:/options";
         }
