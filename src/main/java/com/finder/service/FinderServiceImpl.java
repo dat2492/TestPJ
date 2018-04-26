@@ -46,4 +46,21 @@ public class FinderServiceImpl implements FinderService {
     	finderRepository.save(contact);
     }
 
+    @Override
+    public void delete(int id) {
+    	finderRepository.delete(id);
+    }
+
+
+	@Override
+	public FinderInfo findByRecepti(String recepti) {
+		return finderRepository.findByRecepti(recepti);
+	}
+
+	@Override
+	public FinderInfo findByUsernameAndFolderpath(String username, String folderpath) {		
+		return finderRepository.findByUsernameAndFolderpath(username, folderpath);
+	}
+
+
 }

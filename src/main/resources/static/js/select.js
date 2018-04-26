@@ -7,7 +7,7 @@ $(document).ready(function(){
   var html_code = '';
   $.getJSON('location.json', function(data){
 
-   html_code += '<option value="">Select '+id+'</option>';
+   html_code += '<option value="">管轄エリアを選択</option>';
    $.each(data, function(key, value){
     if(id == 'country')
     {

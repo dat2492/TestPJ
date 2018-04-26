@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head">     
+      <meta charset="UTF-8"></meta>
+     <!-- <title>Upload XML File</title> -->
+   </head>
+   
+   <body>
+     <!-- <th:block th:include="/_menu"></th:block> -->
+    	<nav th:replace="layout :: header"></nav>
+    	<div class="container main-content list">   
+	 	<div class="row">
+		
+      <h3><strong>XMLファイルアップロードによる案件登録</strong></h3>
+       
+      <!-- MyUploadForm -->
+       
+      <form th:object="${myUploadForm}" method="POST" action="" enctype="multipart/form-data">
+      <label>保管フォルダ名(半角)</label>  <input type="text" style="width:300px;" class="form-control" th:field="*{folderpath}" th:required="required" /><br/><br/>
+         アップロードファイル: <input th:field="*{fileDatas}" type="file" id="file" name="file" accept=".xml" />
+         <br/> <br/> 
+         <input type="submit" class="btn btn-primary" value="Upload"></input>   <input type="reset" class="btn btn-primary" value="Cancel"></input>
+      </form>
+      </div>
+      </div>
+ 	<footer th:replace="layout :: footer"></footer>      
+   </body>
+</html>

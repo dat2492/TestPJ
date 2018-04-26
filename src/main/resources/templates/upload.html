@@ -22,8 +22,10 @@
 			<span th:text="${message}"></span>
 		</div>
       <form th:object="${myUploadForm}" method="POST"
-         action="" enctype="multipart/form-data">               
+         action="" enctype="multipart/form-data">                       
          <br/><br/>
+
+         
          <div class="form-group">
                 <label>File to upload (1):</label> 
                 <input th:field="*{fileDatas}" type="file"/><br />                 
@@ -45,6 +47,11 @@
                 <input th:field="*{fileDatas}" type="file"/><br />                
          </div>     
          <button type="submit" class="btn btn-primary">Upload</button>
+         			
+         	<a th:href="@{/myUploadForm/delete}" class="btn btn-success pull-left">
+				<span class="glyphicon glyphicon"></span> Cancel
+			</a>
+         
       </form>
       </div>
        <footer th:replace="layout :: footer"></footer>

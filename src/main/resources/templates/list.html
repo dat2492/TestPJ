@@ -11,9 +11,22 @@
 			class="row alert alert-success alert-dismissible">
 			<button type="button" class="close" data-dismiss="alert"
 				aria-label="Close">
-				<span aria-hidden="true">×</span>
+				<span aria-hidden="true">x</span>
 			</button>
 			<span th:text="${success}"></span>
+		</div>
+		<div class="row">
+			<a th:href="@{/options}" class="btn btn-success pull-left">
+				<span class="glyphicon glyphicon-plus"></span> 新データ追加
+			</a>
+			<form class="form-inline pull-right" action="#"
+				th:action="@{/finderInfo/search}" method="GET">
+				<div class="form-group">
+					<input type="text" class="form-control" name="s"
+						placeholder="Type id..." />
+				</div>
+				<button type="submit" class="btn btn-primary">Search</button>
+			</form>
 		</div>
 		<th:block th:if="${#lists.isEmpty(finderInfos)}">
 			<h3>No data</h3>
@@ -24,21 +37,23 @@
 				<table class="table table-bordered table-hover">
 					<thead>
 						<tr>
-							<th>レコード番号</th>
-							<th>ユーザーID</th>
-							<th>担当局名</th>
-							<th>受付番号</th>
-                        <th>受付年月日</th>
-                        	<th>原因</th>
-							<th>不動産番号</th>
-							<th>地番</th>
-							<th>家屋番号</th>
-							<th>データ保存パス</th>
+							<th scope="col">レコード番号</th>
+                            <th scope="col">ユーザーID</th>
+                            <th scope="col">担当局名</th>
+                            <th scope="col">受付番号</th>
+                       		<th scope="col">受付年月日</th>
+                           	<th scope="col">原因</th>
+                            <th scope="col">不動産番号</th>
+                            <th scope="col">地番</th>
+                            <th scope="col">家屋番号</th>
+                            <th scope="col">データ保存パス</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr th:each="contact,iterStat : ${finderInfos}">
-						   <td><a th:href="@{/finderInfo/{id}/{folder}/check(folder=${contact.folderpath},id=${iterStat.count})}" th:text="${iterStat.count}"></a></td>
+					<tbody>					   
+							
+
+						<tr th:each="contact,iterStat : ${finderInfos}" th:if="${contact.username != test}">
+						   <td><a th:href="@{/finderInfo/{folder}/check(folder=${contact.folderpath})}" th:text="${iterStat.count}"></a></td>							
 							<td th:text="${contact.username}"></td>
 							<td th:text="${contact.area}"></td>
 							<td th:text="${contact.recepti}"></td>
