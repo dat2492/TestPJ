@@ -45,7 +45,7 @@ public class FinderServiceImpl implements FinderService {
     public void save(FinderInfo contact) {
     	finderRepository.save(contact);
     }
-
+    	
     @Override
     public void delete(int id) {
     	finderRepository.delete(id);
@@ -61,6 +61,4 @@ public class FinderServiceImpl implements FinderService {
 	public FinderInfo findByUsernameAndFolderpath(String username, String folderpath) {		
 		return finderRepository.findByUsernameAndFolderpath(username, folderpath);
 	}
-
-
 }

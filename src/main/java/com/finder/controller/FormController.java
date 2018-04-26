@@ -27,10 +27,6 @@ public class FormController {
 	@Autowired
 	private FinderService finderService;
 
-	@GetMapping("/options")
-    public String options(@ModelAttribute("finderInfo")FinderInfo finderInfo) {        
-        return "new";
-    }
 	
 	@GetMapping("/finderInfo")
 	public String index(Model model,HttpServletRequest hsr,@ModelAttribute("finderInfo")FinderInfo finderInfo) {
@@ -47,8 +43,8 @@ public class FormController {
 		NTLMPassword ntlm = new NTLMPassword();
 		HttpSession session = hsr.getSession();
 		String user = session.getAttribute("user").toString();
-       String pass = session.getAttribute("pass").toString();
-       String pass2 = ntlm.encode(pass);
+        String pass = session.getAttribute("pass").toString();
+        String pass2 = ntlm.encode(pass);
 		model.addAttribute("username", user);
 		model.addAttribute("password", pass2);
 		model.addAttribute("area", finderInfo.getArea());
@@ -58,53 +54,14 @@ public class FormController {
 	}
 
 
-	@RequestMapping("/finderInfo/save")
-	public String save(@Valid FinderInfo finderInfo, BindingResult result, HttpServletRequest hsr, RedirectAttributes redirect, HttpServletRequest request, Model model) {
-		request.getSession().setAttribute("area", finderInfo.getArea());
-		request.getSession().setAttribute("recepti", finderInfo.getRecepti());
-		request.getSession().setAttribute("date", finderInfo.getDate());
-		request.getSession().setAttribute("cause", finderInfo.getCause());
-		request.getSession().setAttribute("estate", finderInfo.getEstate());
-		request.getSession().setAttribute("lotnumber", finderInfo.getLotnumber());
-		request.getSession().setAttribute("house", finderInfo.getHouse());
-		
-		NTLMPassword ntlm = new NTLMPassword();
-		HttpSession session = hsr.getSession();
-		String user = session.getAttribute("user").toString();
-		String pass = session.getAttribute("pass").toString();
-		String pass2 = ntlm.encode(pass);
-		
-		FinderInfo receptiExists = finderService.findByRecepti(finderInfo.getRecepti());		
-		if (receptiExists != null) {
-			model.addAttribute("area", finderInfo.getArea());
-			model.addAttribute("username", user);
-			model.addAttribute("password", pass2);			
-			model.addAttribute("finderInfo", new FinderInfo());
-			model.addAttribute("InvalidRecepti", "この受付番号は使用されています。別の受付番号を入力してください !");			
-			return "form";
-		}
-		
-		FinderInfo folderPathExists = finderService.findByUsernameAndFolderpath(user, finderInfo.getFolderpath());
-		if (folderPathExists != null){	
-			model.addAttribute("area", finderInfo.getArea());
-			model.addAttribute("username", user);
-			model.addAttribute("password", pass2);		
-			model.addAttribute("finderInfo", new FinderInfo());
-			model.addAttribute("InvalidFolder", "このフォルダは存在してしまいました !");
-			return "form";
-		}
-		
+	@PostMapping("/finderInfo/save")
+	public String save(@Valid FinderInfo finderInfo, BindingResult result, RedirectAttributes redirect,HttpServletRequest request) {
 		if (result.hasErrors()) {
-			model.addAttribute("area", finderInfo.getArea());
-			model.addAttribute("username", user);
-			model.addAttribute("password", pass2);		
-			model.addAttribute("finderInfo", new FinderInfo());
 			return "form";
 		}
-		
-		request.getSession().setAttribute("folderpath", finderInfo.getFolderpath());			
-		finderService.save(finderInfo);		
-		request.getSession().setAttribute("id", finderInfo.getId());
+		request.getSession().setAttribute("folderpath", finderInfo.getFolderpath());
+		finderService.save(finderInfo);
+		redirect.addFlashAttribute("success", "Saved data successfully!");
 		return "redirect:/uploadMultiFile";
 	}	
 }

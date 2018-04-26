@@ -166,7 +166,5 @@ public class FinderInfo implements Serializable {
 	public void setFolderpath(String folderpath) {
 		this.folderpath = folderpath;
 	}
-
-		
-	
 }
+
