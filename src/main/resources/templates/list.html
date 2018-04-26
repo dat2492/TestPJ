@@ -29,16 +29,15 @@
 			</form>
 		</div>
 		<th:block th:if="${#lists.isEmpty(finderInfos)}">
-			<h3>データ無</h3>
+			<h3>No data</h3>
 		</th:block>
 
 		<th:block th:unless="${#lists.isEmpty(finderInfos)}">
 			<div class="row">
-				<table class="table table-bordered table-hover width: 150px">
+				<table class="table table-bordered table-hover">
 					<thead>
 						<tr>
 							<th scope="col">レコード番号</th>
-								<th scope="col">レコード番号</th>
                             <th scope="col">ユーザーID</th>
                             <th scope="col">担当局名</th>
                             <th scope="col">受付番号</th>
@@ -54,7 +53,7 @@
 							
 
 						<tr th:each="contact,iterStat : ${finderInfos}" th:if="${contact.username != test}">
-						   <td><a th:href="@{/finderInfo/{folder}/check(folder=${contact.folderpath})}" th:text="${contact.id}"></a></td>							
+						   <td><a th:href="@{/finderInfo/{folder}/check(folder=${contact.folderpath})}" th:text="${iterStat.count}"></a></td>							
 							<td th:text="${contact.username}"></td>
 							<td th:text="${contact.area}"></td>
 							<td th:text="${contact.recepti}"></td>
