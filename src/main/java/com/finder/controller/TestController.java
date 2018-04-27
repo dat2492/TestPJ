@@ -83,7 +83,7 @@ public class TestController {
 			e.printStackTrace();	
 		}
 	    	  }
-    	}, 2000);
+    	}, 3000);
 		File dir = new File(path);
 		File[] files = dir.listFiles(new FilenameFilter() {
 		    public boolean accept(File dir, String name) {
@@ -114,7 +114,7 @@ public class TestController {
 			e.printStackTrace();
 		}
 	    	  }
-    	}, 2500);
+    	}, 4000);
 		timer.schedule(new TimerTask() {
 	    	  @Override
 	    	  public void run() {
@@ -126,7 +126,7 @@ public class TestController {
 					e.printStackTrace();
 				}
 	    	  }
-    	}, 3500);
+    	}, 5000);
 		timer.schedule(new TimerTask() {
 	    	  @Override
 	    	  public void run() {
@@ -141,7 +141,7 @@ public class TestController {
 					e.printStackTrace();
 				}
 	    	  }
-  	}, 4000);
+  	}, 6000);
 		timer.schedule(new TimerTask() {
 	    	  @Override
 	    	  public void run() {
@@ -153,7 +153,7 @@ public class TestController {
 					e.printStackTrace();
 				}
 	    	  }
-  	}, 4500);
+  	}, 7000);
 		timer.schedule(new TimerTask() {
 	    	  @Override
 	    	  public void run() {
@@ -162,7 +162,7 @@ public class TestController {
 	    			    if (!file.isDirectory()) 
 	    			        file.delete();
 	    	  }
-	}, 5000);
+	}, 8000);
 		request.getSession().setAttribute("pdfLocation", directory+folder+".pdf");
 //		String line ="";
 //		CommandLine commandLine = CommandLine.parse(line);
@@ -170,7 +170,7 @@ public class TestController {
 //		executor.setExitValue(1);
 //		int exitValue = executor.execute(commandLine);
 		try{
-			Thread.sleep(7000);
+			Thread.sleep(9000);
 			}catch(Exception e){}
         return "redirect:/pdfDownload";
     }
