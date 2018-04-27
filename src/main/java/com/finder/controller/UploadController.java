@@ -22,6 +22,7 @@ import com.finder.model.*;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -60,11 +61,10 @@ private FinderService finderService;
 			MyUploadForm myUploadForm,HttpServletRequest hsr) {
 
         // Thư mục gốc upload file.
-       HttpSession session = hsr.getSession();
+		HttpSession session = hsr.getSession();
     	String user = session.getAttribute("user").toString();
     	String folderpath = session.getAttribute("folderpath").toString();
-       String uploadRootPath = "/home/"+user+"/samba/"+folderpath+"/";
- 
+        String uploadRootPath = "/home/"+user+"/samba/nsr/"+folderpath+"/";
         File uploadRootDir = new File(uploadRootPath);
         // Tạo thư mục gốc upload nếu nó không tồn tại.
         if (!uploadRootDir.exists()) {
@@ -73,13 +73,11 @@ private FinderService finderService;
         MultipartFile[] fileDatas = myUploadForm.getFileDatas();
         // 
         List<File> uploadedFiles = new ArrayList<File>();
-        List<String> failedFiles = new ArrayList<String>();
  
         for (MultipartFile fileData : fileDatas) {
  
             // Tên file gốc tại Client.
             String name = fileData.getOriginalFilename();
-            System.out.println("Client File Name = " + name);
  
             if (name != null && name.length() > 0) {
                 try {
@@ -97,13 +95,11 @@ private FinderService finderService;
                 }
                 catch (Exception e) {
                     System.out.println("Error Write file: " + name);
-                    failedFiles.add(name);
                 }
             }
         }
 
         model.addAttribute("uploadedFiles", uploadedFiles);
-        model.addAttribute("failedFiles", failedFiles);
         
        // pass info from form
 		finderInfo.setArea(request.getSession().getAttribute("area").toString());
@@ -116,7 +112,7 @@ private FinderService finderService;
 		String id = request.getSession().getAttribute("id").toString();
 		// make XML
 	  try {
-		String filexml = "/home/"+user+"/samba/"+folderpath+"/ID"+id+".xml";
+		String filexml = uploadRootPath+"ID"+id+".xml";
 		File file = new File(filexml);
 		JAXBContext jaxbContext = JAXBContext.newInstance(FinderInfo.class);			
 		Marshaller jaxbMarshaller = jaxbContext.createMarshaller();		
@@ -129,7 +125,16 @@ private FinderService finderService;
 	  		catch (Exception e) {
 	  			e.printStackTrace();
 	      }		  
-        return "redirect:/finderInfo";        
+	  model.addAttribute("area", session.getAttribute("area"));
+      model.addAttribute("recepti", session.getAttribute("recepti"));
+      model.addAttribute("date", session.getAttribute("date"));
+      model.addAttribute("cause", session.getAttribute("cause"));
+      model.addAttribute("estate", session.getAttribute("estate"));
+      model.addAttribute("lotnumber", session.getAttribute("lotnumber"));
+      model.addAttribute("house", session.getAttribute("house"));
+      model.addAttribute("folderpath", session.getAttribute("folderpath"));
+      model.addAttribute("uploadedFiles", uploadedFiles);
+      return "ConfirmationPage";        
     }	
 	
 	@GetMapping("/myUploadForm/delete")
@@ -148,33 +153,50 @@ private FinderService finderService;
 	        method = { RequestMethod.POST })
 	public @ResponseBody Object upload(
 	        @RequestParam("file") MultipartFile file,
-	        HttpServletRequest request,HttpServletRequest hsr) {
+	        HttpServletRequest request,HttpServletRequest hsr,Model model) {
     	HttpSession session = hsr.getSession();
     	String user = session.getAttribute("user").toString();
     	String folderpath = session.getAttribute("folderpath").toString();
-       String UPLOADED_FOLDER = "/home/"+user+"/samba/"+folderpath+"/";
-		System.out.println("upload() called");
-
-		if (file.isEmpty()) {
-			request.setAttribute("message", "Please select a file to upload");
-			return "uploadStatus";
-		}
-
+       String UPLOADED_FOLDER = "/home/"+user+"/samba/nsr/"+folderpath+"/";
 		try {
 			String directory = UPLOADED_FOLDER;
             File dir = new File(directory);
             if (!dir.exists()) dir.mkdirs();
 			byte[] bytes = file.getBytes();
-			Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+			Path path = Paths.get(UPLOADED_FOLDER
+			        + file.getOriginalFilename());
 			Files.write(path, bytes);
 			ProcessBuilder pb = new ProcessBuilder("gpg", "--passphrase", "1234567890", "--batch", "--quiet", "--yes", "-ba", path.toString());
       	  Process p = pb.start();
-			request.setAttribute("message", "You have successfully uploaded '" + file.getOriginalFilename() + "'");
+      	File[] files = dir.listFiles(new FilenameFilter() {
+		    public boolean accept(File dir, String name) {
+		        return !name.toLowerCase().endsWith(".asc");
+		    }
+		});
 
+	        ArrayList filPaths = new ArrayList();
+	        for (File file2 : files) {
+	            filPaths.add(file2.getName());
+	        }
+			request.getSession().setAttribute("files", filPaths);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "hello";
+		return "";
 
+	}
+    @GetMapping("/ddCPage")
+	public String options(HttpServletRequest hsr,Model model) {
+    	 HttpSession session = hsr.getSession();
+    	 model.addAttribute("area", session.getAttribute("area"));
+        model.addAttribute("recepti", session.getAttribute("recepti"));
+        model.addAttribute("date", session.getAttribute("date"));
+        model.addAttribute("cause", session.getAttribute("cause"));
+        model.addAttribute("estate", session.getAttribute("estate"));
+        model.addAttribute("lotnumber", session.getAttribute("lotnumber"));
+        model.addAttribute("house", session.getAttribute("house"));
+        model.addAttribute("folderpath", session.getAttribute("folderpath"));
+        model.addAttribute("uploadedFiles", session.getAttribute("files"));
+        return "ConfirmationPage";
 	}
 }

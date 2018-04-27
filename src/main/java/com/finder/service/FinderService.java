@@ -12,12 +12,13 @@ public interface FinderService {
     
     List<FinderInfo> kwSearch(String area, String recepti,String date);
     
-    FinderInfo searchf(String username, String folderpath);
-    void save(FinderInfo contact);   
     FinderInfo findOne(int id);
-    void delete(int id);
 
-	FinderInfo findByRecepti(String recepti); 
-	
-	FinderInfo findByUsernameAndFolderpath(String username, String folderpath);
+    void save(FinderInfo contact);
+
+    void delete(int id);
+    
+    FinderInfo findByRecepti(String recepti); 
+    
+    FinderInfo findByUsernameAndFolderpath(String username, String folderpath);
 }

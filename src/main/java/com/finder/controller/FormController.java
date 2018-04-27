@@ -36,8 +36,7 @@ public class FormController {
 	public String index(Model model,HttpServletRequest hsr,@ModelAttribute("finderInfo")FinderInfo finderInfo) {
 		HttpSession session = hsr.getSession();
 		String user = session.getAttribute("user").toString();
-		model.addAttribute("username", user);
-		model.addAttribute("finderInfos", finderService.findAll());
+		model.addAttribute("finderInfos", finderService.UserFilter(user));
 		return "list";
 	}
 	
@@ -101,7 +100,13 @@ public class FormController {
 			model.addAttribute("finderInfo", new FinderInfo());
 			return "form";
 		}
-		
+		request.getSession().setAttribute("area", finderInfo.getArea());
+		request.getSession().setAttribute("recepti", finderInfo.getRecepti());
+		request.getSession().setAttribute("date", finderInfo.getDate());
+		request.getSession().setAttribute("cause", finderInfo.getCause());
+		request.getSession().setAttribute("estate", finderInfo.getEstate());
+		request.getSession().setAttribute("lotnumber", finderInfo.getLotnumber());
+		request.getSession().setAttribute("house", finderInfo.getHouse());
 		request.getSession().setAttribute("folderpath", finderInfo.getFolderpath());			
 		finderService.save(finderInfo);		
 		request.getSession().setAttribute("id", finderInfo.getId());

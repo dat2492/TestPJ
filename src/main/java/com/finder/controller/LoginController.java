@@ -57,6 +57,19 @@ public class LoginController {
         	User userExists = userService.checkUser(part1);
         	if(userExists== null) {
         		userService.save(user);
+        		Runtime rt = Runtime.getRuntime();
+        		Process pr1 = rt.exec("mkdir -m  550 /home/"+part1+"/samba/");
+        		Process pr2 = rt.exec("chown "+part1+":"+part1+" /home/"+part1+"/samba/");
+        		Process pr3 = rt.exec("mkdir -m  775 /home/"+part1+"/samba/nsr/");
+        		Process pr4 = rt.exec("chown "+part1+":"+part1+" /home/"+part1+"/samba/nsr/");
+        		Process pr5 = rt.exec("mkdir -m  775 /home/"+part1+"/samba/free/ & chown");
+        		Process pr6 = rt.exec("chown "+part1+":"+part1+" /home/"+part1+"/samba/free/");
+        		Process pr7 = rt.exec("mkdir -m  777 /home/"+part1+"/samba/.verify/");
+        		Process pr8 = rt.exec("chown "+part1+":"+part1+" /home/"+part1+"/samba/.verify/");
+        		Process pr9 = rt.exec("mkdir -m  700 /home/tmp/"+part1+"/");
+        		Process pr10 = rt.exec("chown "+part1+":"+part1+" /home/tmp/"+part1+"/");
+        		Process pr11 = rt.exec("mkdir -m  700 /home/tmp/csv/"+part1+"/");
+        		Process pr12 = rt.exec("chown "+part1+":"+part1+" /home/tmp/csv/"+part1+"/");
         	}
         	return "redirect:/options";
         }

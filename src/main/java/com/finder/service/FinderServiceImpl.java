@@ -28,9 +28,6 @@ public class FinderServiceImpl implements FinderService {
         return finderRepository.findByAreaAndReceptiAndDate(area, recepti, date);
     }
 
-    public FinderInfo searchf(String username, String folderpath) {
-    	return finderRepository.findByUsernameAndFolderpath(username, folderpath);
-    }
     @Override
     public List<FinderInfo> UserFilter(String username) {
         return finderRepository.findByUsername(username);
@@ -45,14 +42,13 @@ public class FinderServiceImpl implements FinderService {
     public void save(FinderInfo contact) {
     	finderRepository.save(contact);
     }
-    	
+
     @Override
     public void delete(int id) {
     	finderRepository.delete(id);
     }
 
-
-	@Override
+    @Override
 	public FinderInfo findByRecepti(String recepti) {
 		return finderRepository.findByRecepti(recepti);
 	}
@@ -61,4 +57,5 @@ public class FinderServiceImpl implements FinderService {
 	public FinderInfo findByUsernameAndFolderpath(String username, String folderpath) {		
 		return finderRepository.findByUsernameAndFolderpath(username, folderpath);
 	}
+
 }
