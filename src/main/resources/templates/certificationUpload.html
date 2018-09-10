@@ -32,6 +32,14 @@
 			</button>
 			<span th:text="${message2}"></span>
 		</div>
+		<div th:if="${message3}"
+			class="validation-message alert alert-danger" role="alert">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<span th:text="${message3}"></span>
+		</div>
 		<form method="POST" action="/upload" enctype="multipart/form-data">
 			<div class="form-group">
 				<label>下記フォームからpdfファイルをアップロードしください。</label> <input type="file"

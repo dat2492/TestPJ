@@ -66,7 +66,7 @@ public class pdfUploadController {
 	  	  			System.out.println(error);
 	  	  			int rc = p.waitFor();
 	  	  			if(error.contains("不")){
-	  	  				model.addAttribute("message2", "not okay。");
+	  	  				model.addAttribute("message2", "このPDFファイルは改竄されています。");
 	  	  			}else {
 	  	  				model.addAttribute("message1", "ok。");
 	  	  			}
@@ -75,7 +75,7 @@ public class pdfUploadController {
 	  	  				e.printStackTrace();
 	  	  			}
 	              }else {
-	            	  model.addAttribute("message2", "not okay。");
+	            	  model.addAttribute("message3", "このPDFファイルはFinderサーバーで発行されたものではありません");
 	              }
 	           
 	    	  }
